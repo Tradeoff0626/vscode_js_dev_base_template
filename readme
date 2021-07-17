@@ -1,0 +1,72 @@
+1. npm 관리 패키지 초기화. (package.json 생성)
+    Shell> npm init -y
+        ; '-y'는 설치 시 요구하는 초기값 y또는 n을 'y로 자동 설정'.
+        ; 요소의 scripts 빼고는 크게 의미가 없으므로 삭제해도 무방
+
+
+2. 해당 프로젝트(루트 디렉토리)에만 해당하는 vscode 설정
+    1) 프로젝트 root 디렉토리에 '.vscode' 디렉토리 생성
+    
+    2) '.vscode' 디렉토리에 'setting.json' 파일 생성
+
+
+
+3. Formatting 설치 ( 비강제적인 문법 설정 <ex. Prettier> )
+    1) 확장(extensions) 기능에 'Prettier - Code formatter' 설치
+
+    2) Shell> npm install --save-dev prettier
+        ; '--save-dev'는 개발용도, package.json의 'devDependencies'에 추가됨.
+          cf. '-g'는 global로 npm 자체에서 설치 관리되므로 package.json에 등록되지 않음.
+
+    3) 프로젝트 root 디렉토리에 '.prettierrc' 파일 생성 후 내용 입력 (참조)
+        ; (semi: 세이콜론 사용여부, singleQuote: 홑따옴표 사용여부)
+
+    4) '.vscode/setting.json'에 내용 입력 (참조)
+        ; '[javascript]'는 자바스크립트 파일에만 적용
+        ; 'editor.formatOnSave'는 save 시 formatting 설정할지 여부 (여기서는 true)
+        ; 'editor.defaultFormatter'는 기본 formatter 설정(여기서는 'Prettier - Code formatter')
+
+
+4. Linting 설치 ( 강제적인 문법 설정 <ex. ESLint> )
+    1) Shell> npm install --save-dev eslint
+
+    2) 프로젝트 root 디렉토리에 '.eslintrc.js' 파일 생성 후 내용 입력 (참조)
+        ; ESLint 가 비활성화 상태이면 재시작 혹은 우측 하단 상태바에서 ESLint 활성화 필요
+        
+        * ESLint 'Best Practice' javascript Plug-in 중 추천되는 'Air BnB'를 사용할 예정. 하단 추가 설치
+            Shell> npm install --save-dev eslint-config-airbnb-base eslint-plugin-import
+
+        ; "extends: ['airbnb-base']" 내용 입력
+
+    3) ESLint와 Prettier가 충돌하는 문제를 해결하기 위해 추가 설치(Prettier가 수정한건 ESLint에서 간섭하지 않음)
+        ; Shell> npm install --save-dev eslint-config-prettier
+        ; "extends: ['airbnb-base', 'prettier']" -> 'prettier'를 내용 "가장 뒤"에 추가
+
+    4) nodeJS 문법 규칙 전용 Plug-in 설치 및 추가
+        ; Shell> npm install --save-dev eslint-plugin-node
+        ; "extends: ['airbnb-base', 'plugin:node/recommended', 'prettier']"
+
+
+5. Typy Checking (JavaScript 타입 검사 <ex. typescript> )
+    1) typescipt 설치
+        ; Shell> npm install --save-dev typescript
+
+    * 타입스크립트를 적용할 js 파일 최상단에 다음 코드(주석) 추가
+        => // @ts-check 
+
+    2) nodeJS에도 Type Checking 하기
+        ; Shell> npm install --save-dev @types/node
+
+    3) Type checking 설정 파일 등록 (상세한 설정을 위해 추가. 없어도 기본 동작은 함)
+        ; 루트 디렉토리에 'jsconfig.json' 추가 및 내용 입력
+        ; 'compilerOptions >> strict >> 컴파일 시 타입을 엄격한 확인 여부
+        ; 'include' 확인할 경로
+
+
+
+
+*) 해당 템플릿 코드를 다운받아서 'git init'하여 개발하면 된다.
+
+*) 각 설정파일에 대한 옵션은 검색하여 추가 및 수정 할 것
+
+*) 배포 시 각 설정 파일은 '.gitignore' 파일을 수정하여 설정할 것
